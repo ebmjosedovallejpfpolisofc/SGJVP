@@ -43,8 +43,8 @@ linear-gradient(
 #1e293b
 );
 min-height:100vh;
-color:white;
 padding:20px;
+color:white;
 }
 
 .container{
@@ -67,7 +67,7 @@ margin-bottom:20px;
 }
 
 .title h1{
-font-size:30px;
+font-size:32px;
 }
 
 .title p{
@@ -77,8 +77,8 @@ margin-top:5px;
 
 .btn{
 width:100%;
-border:none;
 padding:15px;
+border:none;
 border-radius:18px;
 background:#38bdf8;
 color:white;
@@ -96,18 +96,22 @@ transform:scale(1.02);
 background:#ef4444;
 }
 
-#reader{
-border-radius:25px;
-overflow:hidden;
+.hidden{
 display:none;
+}
+
+#reader{
+display:none;
+overflow:hidden;
+border-radius:25px;
 margin-top:15px;
 }
 
 .status{
-text-align:center;
-font-weight:bold;
 margin-top:15px;
 font-size:18px;
+text-align:center;
+font-weight:bold;
 }
 
 .ok{
@@ -141,30 +145,30 @@ border-radius:25px;
 }
 
 .popup-box h2{
-margin-bottom:15px;
 text-align:center;
+margin-bottom:15px;
 }
 
 input,
 select{
 width:100%;
-padding:15px;
+padding:14px;
 border:none;
 border-radius:15px;
-margin-top:10px;
 background:#334155;
 color:white;
+margin-top:10px;
 }
 
 .monitor{
 display:flex;
 align-items:center;
 gap:10px;
-background:
-rgba(255,255,255,.06);
 padding:12px;
 border-radius:15px;
 margin-top:10px;
+background:
+rgba(255,255,255,.06);
 }
 
 .monitor img{
@@ -174,11 +178,8 @@ border-radius:50%;
 object-fit:cover;
 }
 
-.hidden{
-display:none;
-}
-
 </style>
+
 </head>
 <body>
 
@@ -201,14 +202,13 @@ José do Valle Pereira
 
 <div id="blockSite">
 
-<p
-style="
+<p style="
 text-align:center;
 margin-bottom:15px;
 ">
 
 Instale o aplicativo
-para continuar.
+para continuar
 
 </p>
 
@@ -400,7 +400,7 @@ class="popup">
 <div class="popup-box">
 
 <h2>
-Monitores e Professora
+Equipe
 </h2>
 
 <div class="monitor">
@@ -428,12 +428,12 @@ Professora
 <div>
 
 <b>
-Monitor
+Monitoria
 </b>
 
 <br>
 
-Monitoria
+Equipe de apoio
 
 </div>
 
@@ -526,85 +526,17 @@ deferredPrompt
 
 deferredPrompt.prompt();
 
-const choice =
-await deferredPrompt.userChoice;
-
-if(
-choice.outcome
-===
-"accepted"
-){
-
-console.log(
-"App instalado"
-);
-
-}
+await deferredPrompt
+.userChoice;
 
 }
 else{
 
 alert(
-"Seu navegador não suporta instalação agora."
+"Instalação indisponível agora."
 );
 
 }
-
-}
-
-const isStandalone =
-
-window.matchMedia(
-"(display-mode: standalone)"
-).matches
-
-||
-
-window.navigator.standalone
-
-||
-
-document.referrer.includes(
-"android-app://"
-);
-
-if(
-isStandalone
-){
-
-document
-.getElementById(
-"blockSite"
-)
-.style.display =
-"none";
-
-document
-.getElementById(
-"appContent"
-)
-.classList.remove(
-"hidden"
-);
-
-document
-.getElementById(
-"reader"
-)
-.style.display =
-"block";
-
-iniciarScanner();
-
-}
-else{
-
-document
-.getElementById(
-"appContent"
-)
-.style.display =
-"none";
 
 }
 
@@ -656,6 +588,56 @@ document
 
 }
 
+const isStandalone =
+
+window.matchMedia(
+"(display-mode: standalone)"
+).matches
+
+||
+
+window.navigator.standalone
+
+||
+
+document.referrer.includes(
+"android-app://"
+);
+
+if(
+isStandalone
+){
+
+document
+.getElementById(
+"blockSite"
+)
+.style.display =
+"none";
+
+document
+.getElementById(
+"appContent"
+)
+.classList.remove(
+"hidden"
+);
+
+document
+.getElementById(
+"reader"
+)
+.style.display =
+"block";
+
+setTimeout(()=>{
+
+iniciarScanner();
+
+},500);
+
+}
+
 let scanner =
 null;
 
@@ -667,6 +649,8 @@ let currentCamera =
 
 async function iniciarScanner(){
 
+try{
+
 scanner =
 new Html5Qrcode(
 "reader"
@@ -677,12 +661,38 @@ await Html5Qrcode
 .getCameras();
 
 if(
-cameras.length
+!cameras.length
 ){
 
-iniciarCamera(
+document
+.getElementById(
+"status"
+)
+.innerHTML =
+
+"❌ Nenhuma câmera encontrada";
+
+return;
+
+}
+
+await iniciarCamera(
 cameras[0].id
 );
+
+}catch(err){
+
+console.error(
+err
+);
+
+document
+.getElementById(
+"status"
+)
+.innerHTML =
+
+"❌ Erro ao iniciar câmera";
 
 }
 
@@ -706,13 +716,25 @@ currentCamera
 %
 cameras.length;
 
+try{
+
 await scanner.stop();
 
-iniciarCamera(
+await iniciarCamera(
+
 cameras[
 currentCamera
 ].id
+
 );
+
+}catch(err){
+
+console.error(
+err
+);
+
+}
 
 }
 
@@ -729,17 +751,13 @@ cameraId,
 fps:10,
 
 qrbox:{
-
 width:250,
 height:250
-
 }
 
 },
 
-async (
-decodedText
-)=>{
+(decodedText)=>{
 
 procurarPessoa(
 decodedText.trim()
@@ -759,57 +777,21 @@ codigo
 
 try{
 
-let ref =
+const ref =
 doc(
 db,
 "alunos",
 codigo
 );
 
-let snap =
+const snap =
 await getDoc(
 ref
 );
 
 if(
-snap.exists()
+!snap.exists()
 ){
-
-loginAutomatico(
-snap.data(),
-codigo,
-"aluno"
-);
-
-return;
-
-}
-
-ref =
-doc(
-db,
-"professores",
-codigo
-);
-
-snap =
-await getDoc(
-ref
-);
-
-if(
-snap.exists()
-){
-
-loginAutomatico(
-snap.data(),
-codigo,
-"admin"
-);
-
-return;
-
-}
 
 document
 .getElementById(
@@ -817,15 +799,83 @@ document
 )
 .innerHTML =
 
-"❌ Não encontrado";
+"❌ ID não encontrado";
 
 document
 .getElementById(
 "status"
 )
 .className =
-
 "status erro";
+
+return;
+
+}
+
+const data =
+snap.data();
+
+const cargoLower =
+
+(
+data.cargo
+||
+""
+)
+.toLowerCase();
+
+const ehAdmin =
+
+cargoLower.includes(
+"monitor"
+)
+
+||
+
+cargoLower.includes(
+"professor"
+);
+
+salvarUsuario(
+data,
+codigo,
+ehAdmin
+?
+"admin"
+:
+"aluno"
+);
+
+document
+.getElementById(
+"status"
+)
+.innerHTML =
+
+"✅ Confirmado";
+
+document
+.getElementById(
+"status"
+)
+.className =
+"status ok";
+
+setTimeout(()=>{
+
+location.href =
+
+ehAdmin
+
+?
+
+"portal-monitor-prof.html"
+
+:
+
+"portal-aluno.html";
+
+},1000);
 
 }catch(err){
 
@@ -873,21 +923,29 @@ return;
 
 try{
 
-let ref =
+const ref =
 doc(
 db,
 "alunos",
 id
 );
 
-let snap =
+const snap =
 await getDoc(
 ref
 );
 
 if(
-snap.exists()
+!snap.exists()
 ){
+
+alert(
+"ID não encontrado"
+);
+
+return;
+
+}
 
 const data =
 snap.data();
@@ -905,95 +963,42 @@ return;
 
 }
 
-salvarUsuario(
-data,
-id,
-"aluno"
-);
-
-location.href =
-"portal-aluno.html";
-
-return;
-
-}
-
-ref =
-doc(
-db,
-"professores",
-id
-);
-
-snap =
-await getDoc(
-ref
-);
-
-if(
-snap.exists()
-){
-
-const data =
-snap.data();
-
-if(
-data.cargo
-!== cargo
-){
-
-alert(
-"Cargo incorreto"
-);
-
-return;
-
-}
+const cargoLower =
+cargo.toLowerCase();
 
 const ehAdmin =
 
-cargo
-.toLowerCase()
-.includes(
+cargoLower.includes(
 "monitor"
 )
 
 ||
 
-cargo
-.toLowerCase()
-.includes(
+cargoLower.includes(
 "professor"
 );
-
-if(
-!ehAdmin
-){
-
-alert(
-"Cargo inválido"
-);
-
-return;
-
-}
 
 salvarUsuario(
 data,
 id,
+ehAdmin
+?
 "admin"
+:
+"aluno"
 );
 
 location.href =
-"portal-monitor-prof.html";
 
-return;
+ehAdmin
 
-}
+?
 
-alert(
-"ID não encontrado"
-);
+"portal-monitor-prof.html"
+
+:
+
+"portal-aluno.html";
 
 }catch(err){
 
@@ -1039,57 +1044,6 @@ tipo
 })
 
 );
-
-}
-
-function loginAutomatico(
-data,
-id,
-tipo
-){
-
-salvarUsuario(
-data,
-id,
-tipo
-);
-
-document
-.getElementById(
-"status"
-)
-.innerHTML =
-
-"✅ Confirmado";
-
-document
-.getElementById(
-"status"
-)
-.className =
-
-"status ok";
-
-setTimeout(()=>{
-
-if(
-tipo
-===
-"admin"
-){
-
-location.href =
-"portal-monitor-prof.html";
-
-}
-else{
-
-location.href =
-"portal-aluno.html";
-
-}
-
-},1000);
 
 }
 
