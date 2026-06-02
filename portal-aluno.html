@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Portal Aluno - SGJVP</title>
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Portal Aluno
+</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -15,10 +22,15 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#0f172a,#1e293b);
-color:white;
+background:
+linear-gradient(
+135deg,
+#0f172a,
+#1e293b
+);
 min-height:100vh;
 padding:20px;
+color:white;
 }
 
 .container{
@@ -26,174 +38,164 @@ max-width:1000px;
 margin:auto;
 }
 
-.header{
-background:rgba(255,255,255,.08);
-padding:25px;
+.card{
+background:
+rgba(255,255,255,.08);
+backdrop-filter:
+blur(10px);
+padding:20px;
 border-radius:25px;
 margin-bottom:20px;
-backdrop-filter:blur(10px);
 }
 
-.header h1{
-font-size:28px;
-}
-
-.header p{
-opacity:.8;
-margin-top:5px;
+.topo{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(220px,1fr)
+);
 gap:15px;
-margin-bottom:20px;
+margin-top:20px;
 }
 
-.card-btn{
-background:rgba(255,255,255,.08);
+button{
 border:none;
-padding:25px;
-border-radius:25px;
-color:white;
-font-size:18px;
-cursor:pointer;
-transition:.2s;
-backdrop-filter:blur(10px);
-}
-
-.card-btn:hover{
-transform:scale(1.03);
-background:#38bdf8;
-}
-
-.content{
-background:rgba(255,255,255,.08);
-padding:25px;
-border-radius:25px;
-min-height:300px;
-backdrop-filter:blur(10px);
-}
-
-.item{
-background:rgba(255,255,255,.06);
 padding:15px;
 border-radius:18px;
-margin-bottom:15px;
-}
-
-.btn{
-border:none;
-padding:12px 18px;
-border-radius:15px;
 background:#38bdf8;
 color:white;
+font-size:16px;
 cursor:pointer;
-margin-top:10px;
-font-size:15px;
+transition:.2s;
+}
+
+button:hover{
+transform:scale(1.02);
 }
 
 .btn-red{
 background:#ef4444;
 }
 
-.ok{
-color:#4ade80;
-font-weight:bold;
+.btn-green{
+background:#22c55e;
+}
+
+.item{
+background:
+rgba(255,255,255,.06);
+padding:15px;
+border-radius:18px;
+margin-top:10px;
+}
+
+.chat{
+height:300px;
+overflow:auto;
+background:
+rgba(255,255,255,.05);
+padding:10px;
+border-radius:15px;
+margin-bottom:10px;
+}
+
+.msg{
+padding:10px;
+border-radius:12px;
+margin-top:8px;
+background:
+rgba(255,255,255,.08);
 }
 
 .erro{
 color:#ef4444;
 font-weight:bold;
-}
-
-input, textarea{
-width:100%;
-padding:14px;
-border:none;
-border-radius:15px;
-margin-top:10px;
-background:#334155;
-color:white;
-}
-
-textarea{
-resize:none;
-height:100px;
-}
-
-.chat-box{
-height:300px;
-overflow-y:auto;
-background:rgba(255,255,255,.05);
-padding:15px;
-border-radius:15px;
 margin-bottom:10px;
 }
 
-.msg-prof{
-background:#38bdf8;
-padding:12px;
-border-radius:15px;
+.ok{
+color:#4ade80;
+font-weight:bold;
 margin-bottom:10px;
 }
 
-.msg-aluno{
-background:#475569;
-padding:12px;
-border-radius:15px;
-margin-bottom:10px;
-text-align:right;
-}
 </style>
+
 </head>
 <body>
 
 <div class="container">
 
-<div class="header">
-<h1 id="saudacao">
-Olá, aluno
+<div class="card">
+
+<div class="topo">
+
+<div>
+
+<h1 id="ola">
+Portal Aluno
 </h1>
 
-<p id="cargoAluno">
-Carregando cargo...
+<p id="cargo">
+---
 </p>
+
 </div>
+
+<button
+class="btn-red"
+onclick="logout()">
+
+Sair
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
 
 <div class="grid">
 
-<button class="card-btn"
-onclick="mostrarGrupo()">
-👥 Meu Grupo
-</button>
-
-<button class="card-btn"
-onclick="mostrarPedidos()">
-📦 Fazer Pedido
-</button>
-
-<button class="card-btn"
-onclick="mostrarAtividades()">
+<button onclick="mostrarAtividades()">
 📚 Atividades
 </button>
 
-<button class="card-btn"
-onclick="mostrarNotas()">
-📝 Minha Nota
+<button onclick="mostrarPedidos()">
+📦 Pedidos
 </button>
 
-<button class="card-btn"
-onclick="mostrarChat()">
-💬 Chat com Professor
+<button onclick="mostrarNotas()">
+📝 Minhas Notas
+</button>
+
+<button onclick="mostrarChamada()">
+📋 Minha Chamada
+</button>
+
+<button onclick="abrirChat()">
+💬 Chat com Prof
 </button>
 
 </div>
 
-<div class="content"
+</div>
+
+<div
+class="card"
 id="conteudo">
 
-Selecione uma opção acima.
+Selecione uma opção.
 
 </div>
 
@@ -201,157 +203,370 @@ Selecione uma opção acima.
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
+
 getFirestore,
-collection,
-query,
-where,
-getDocs,
 doc,
 getDoc,
 setDoc,
-addDoc,
-serverTimestamp,
-onSnapshot
+collection,
+getDocs
+
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
 apiKey:
-"COLE_SUA_API_KEY",
+"AIzaSyAyXEqSP0WG5CPw7ZrMQ6v5WUb_OPi_UoI",
 
 authDomain:
-"SEU_DOMINIO",
+"spjvp-49fde.firebaseapp.com",
 
 projectId:
-"SEU_PROJECT_ID",
+"spjvp-49fde",
 
 storageBucket:
-"SEU_BUCKET",
+"spjvp-49fde.firebasestorage.app",
 
 messagingSenderId:
-"SEU_SENDER_ID",
+"790148342609",
 
 appId:
-"SEU_APP_ID"
+"1:790148342609:web:18a3a59a4d52ba50572970"
 
 };
 
 const app =
-initializeApp(firebaseConfig);
-
-const db =
-getFirestore(app);
-
-const usuario =
-JSON.parse(
-localStorage.getItem("usuario")
+initializeApp(
+firebaseConfig
 );
 
-if(!usuario){
+const db =
+getFirestore(
+app
+);
+
+const usuario =
+
+JSON.parse(
+localStorage.getItem(
+"usuario"
+)
+);
+
+if(
+!usuario
+||
+usuario.tipo
+!== "aluno"
+){
+
 location.href =
 "index.html";
+
 }
 
-const box =
+document
+.getElementById(
+"ola"
+)
+.innerText =
+
+`Olá, ${usuario.nome}`;
+
+document
+.getElementById(
+"cargo"
+)
+.innerText =
+
+usuario.cargo;
+
+const conteudo =
 document.getElementById(
 "conteudo"
 );
 
-function saudacao(){
+window.logout =
+function(){
 
-const hora =
-new Date().getHours();
+localStorage.removeItem(
+"usuario"
+);
 
-let periodo =
-"Boa noite";
-
-if(hora < 12){
-periodo =
-"Bom dia";
-}
-else if(hora < 18){
-periodo =
-"Boa tarde";
-}
-
-document.getElementById(
-"saudacao"
-).innerText =
-`${periodo}, ${usuario.nome}`;
-
-document.getElementById(
-"cargoAluno"
-).innerText =
-usuario.cargo;
+location.href =
+"index.html";
 
 }
 
-saudacao();
+window.mostrarAtividades =
+async function(){
 
-### `portal-aluno.html` — Parte 2/2
-
-```html
-window.mostrarGrupo = async function(){
-
-box.innerHTML =
-"<h2>Carregando grupo...</h2>";
-
-const q =
-query(
-collection(db,"alunos"),
-where(
-"cargo",
-"==",
+const ref =
+doc(
+db,
+"atividades",
 usuario.cargo
-)
 );
 
 const snap =
-await getDocs(q);
+await getDoc(
+ref
+);
 
 let html =
-"<h2>👥 Meu Grupo</h2>";
+`<h2>
+Atividades
+</h2>`;
 
-snap.forEach(docx=>{
+if(
+!snap.exists()
+){
 
-const d =
-docx.data();
+conteudo.innerHTML =
+"Sem atividades.";
+
+return;
+
+}
+
+const atividades =
+
+snap.data()
+.atividades
+||
+[];
+
+atividades.forEach(a=>{
+
+const hoje =
+new Date();
+
+const entrega =
+new Date(
+a.entrega
+);
+
+const enviadoKey =
+
+`atividade_${usuario.id}_${a.nome}`;
+
+const enviada =
+
+localStorage.getItem(
+enviadoKey
+);
 
 html += `
+
 <div class="item">
-${d.nome}
-</div>
+
+<h3>
+${a.nome}
+</h3>
+
+<p>
+Envio:
+${a.envio}
+</p>
+
+<p>
+Entrega:
+${a.entrega}
+</p>
+
 `;
+
+if(
+hoje > entrega
+&&
+!enviada
+){
+
+html += `
+
+<p class="erro">
+
+DATA FINAL
+DE ENTREGA
+JÁ
+ULTRAPASSADA!
+
+</p>
+
+`;
+
+}
+else if(
+!enviada
+){
+
+html += `
+
+<p class="ok">
+
+ENTREGA
+EM ABERTO!
+ENVIE ABAIXO
+
+</p>
+
+<button
+onclick="
+enviarAtividade(
+'${a.nome}'
+)
+">
+
+Enviar
+Atividade
+
+</button>
+
+`;
+
+}
+else{
+
+html += `
+
+<button
+disabled
+style="
+background:#22c55e;
+cursor:not-allowed;
+width:100%;
+">
+
+ATIVIDADE
+ENVIADA
+
+(se não enviou
+converse com
+monitor
+ou professora)
+
+</button>
+
+`;
+
+}
+
+html += `</div>`;
 
 });
 
-box.innerHTML =
+conteudo.innerHTML =
 html;
+
+}
+
+window.enviarAtividade =
+async function(
+atividade
+){
+
+const assunto =
+
+encodeURIComponent(
+"Entrega de Atividade"
+);
+
+const mensagem =
+
+encodeURIComponent(
+
+`Atividade:
+${atividade}
+
+Do aluno:
+${usuario.nome}
+(ID:
+${usuario.id})`
+
+);
+
+window.location.href =
+
+`mailto:
+salete.santos@prof.pmf.sc.gov.br
+
+?subject=
+${assunto}
+
+&body=
+${mensagem}`;
+
+localStorage.setItem(
+
+`atividade_${usuario.id}_${atividade}`,
+
+"true"
+
+);
+
+await setDoc(
+
+doc(
+db,
+"entregas",
+`${usuario.id}_${atividade}`
+),
+
+{
+
+id:
+usuario.id,
+
+nome:
+usuario.nome,
+
+cargo:
+usuario.cargo,
+
+atividade,
+
+data:
+new Date()
+.toLocaleString()
+
+}
+
+);
+
+mostrarAtividades();
 
 }
 
 window.mostrarPedidos =
 function(){
 
-box.innerHTML = `
+conteudo.innerHTML = `
 
 <h2>
-📦 Fazer Pedido
+Fazer Pedido
 </h2>
 
 <textarea
-id="pedidoTexto"
-placeholder="Digite seu pedido...">
-</textarea>
+id="pedido"
+placeholder="
+Digite
+seu pedido
+"></textarea>
 
 <button
-class="btn"
-onclick="enviarPedido()">
+onclick="
+enviarPedido()
+">
 
 Enviar Pedido
 
@@ -365,303 +580,31 @@ window.enviarPedido =
 async function(){
 
 const texto =
+
 document
 .getElementById(
-"pedidoTexto"
+"pedido"
 )
 .value
 .trim();
 
-if(!texto){
-alert(
-"Digite algo"
-);
-return;
-}
-
-await addDoc(
-collection(
-db,
-"pedidos"
-),
-{
-nome:
-usuario.nome,
-
-id:
-usuario.id,
-
-cargo:
-usuario.cargo,
-
-pedido:
-texto,
-
-data:
-new Date()
-.toLocaleString(),
-
-timestamp:
-serverTimestamp()
-}
-);
+if(
+!texto
+){
 
 alert(
-"Pedido enviado!"
+"Digite algo."
 );
-
-mostrarPedidos();
-
-}
-
-window.mostrarAtividades =
-async function(){
-
-box.innerHTML =
-"<h2>Carregando...</h2>";
-
-const ref =
-doc(
-db,
-"atividades",
-usuario.cargo
-);
-
-const snap =
-await getDoc(ref);
-
-if(!snap.exists()){
-
-box.innerHTML =
-"<h2>Sem atividades</h2>";
 
 return;
 
 }
 
-const data =
-snap.data();
-
-let html =
-"<h2>📚 Atividades</h2>";
-
-for(
-const atividade
-of
-data.atividades
-){
-
-const hoje =
-new Date();
-
-const final =
-new Date(
-atividade.entrega
-);
-
-const expirou =
-hoje > final;
-
-const enviado =
-atividade.enviados
-?.includes(
-usuario.id
-);
-
-html += `
-
-<div class="item">
-
-<h3>
-${atividade.nome}
-</h3>
-
-<p>
-Envio:
-${atividade.envio}
-</p>
-
-<p>
-Entrega:
-${atividade.entrega}
-</p>
-
-`;
-
-if(expirou
-&&
-!enviado){
-
-html += `
-<p class="erro">
-
-DATA FINAL DE ENTREGA
-JÁ ULTRAPASSADA!
-
-</p>
-`;
-
-}
-else if(enviado){
-
-html += `
-<p class="ok">
-
-ATIVIDADE ENVIADA
-(se não enviou,
-converse com
-monitor ou professora)
-
-</p>
-`;
-
-}
-else{
-
-html += `
-<p class="ok">
-
-ENTREGA EM ABERTO!
-ENVIE ABAIXO
-
-</p>
-
-<button
-class="btn"
-onclick="enviarEmail(
-'${atividade.nome}'
-)">
-
-📤 Enviar
-
-</button>
-`;
-
-}
-
-html +=
-"</div>";
-
-}
-
-box.innerHTML =
-html;
-
-}
-
-window.enviarEmail =
-async function(
-atividade
-){
-
-const body =
-encodeURIComponent(
-
-`Atividade:
-${atividade}
-
-Do aluno:
-${usuario.nome}
-(ID:
-${usuario.id})`
-
-);
-
-location.href =
-
-`mailto:
-salete.santos@prof.pmf.sc.gov.br
-
-?subject=Entrega
-de Atividade
-
-&body=${body}`;
-
 const ref =
 doc(
 db,
-"atividades",
-usuario.cargo
-);
-
-const snap =
-await getDoc(ref);
-
-if(!snap.exists())
-return;
-
-const dados =
-snap.data();
-
-dados.atividades =
-dados.atividades.map(
-a=>{
-
-if(
-a.nome
-===
-atividade
-){
-
-if(
-!a.enviados
-)
-a.enviados = [];
-
-if(
-!a.enviados
-.includes(
+"alunos",
 usuario.id
-)
-){
-
-a.enviados
-.push(
-usuario.id
-);
-
-}
-
-}
-
-return a;
-
-}
-);
-
-await setDoc(
-ref,
-dados
-);
-
-mostrarAtividades();
-
-}
-
-window.mostrarNotas =
-async function(){
-
-const turma =
-usuario.cargo
-.match(
-/t(\d+).*G:\s([A-C])/i
-);
-
-if(!turma){
-box.innerHTML =
-"Erro turma";
-return;
-}
-
-const nomeTurma =
-`T${turma[1]}
-G: ${turma[2]}`;
-
-const ref =
-doc(
-db,
-"Notas",
-nomeTurma
 );
 
 const snap =
@@ -669,46 +612,191 @@ await getDoc(
 ref
 );
 
-if(!snap.exists()){
+let pedidos =
+[];
 
-box.innerHTML =
-"<h2>Sem notas</h2>";
+if(
+snap.exists()
+){
+
+pedidos =
+snap.data()
+.pedidos
+||
+[];
+
+}
+
+pedidos.push({
+
+texto,
+
+data:
+new Date()
+.toLocaleString()
+
+});
+
+await setDoc(
+ref,
+{
+...snap.data(),
+pedidos
+}
+);
+
+alert(
+"Pedido enviado!"
+);
+
+}
+
+window.mostrarNotas =
+async function(){
+
+const ref =
+doc(
+db,
+"avaliacoes",
+usuario.cargo
+);
+
+const snap =
+await getDoc(
+ref
+);
+
+if(
+!snap.exists()
+){
+
+conteudo.innerHTML =
+"Sem notas.";
 
 return;
 
 }
 
-const data =
-snap.data();
+const notas =
 
-box.innerHTML = `
+snap.data()
+.notas
+||
+[];
+
+const minha =
+
+notas.find(
+
+n=>
+
+n.id
+===
+usuario.id
+
+);
+
+if(
+!minha
+){
+
+conteudo.innerHTML =
+"Sem avaliação.";
+
+return;
+
+}
+
+conteudo.innerHTML = `
 
 <h2>
-📝 Minhas Notas
+Minhas Notas
 </h2>
 
 <div class="item">
 
-<b>Obediência:</b>
+<b>
+Obediência:
+</b>
 
-${
-data["Obediência"]
-?.[usuario.nome]
-||
-"-"
-}
+${minha.obediencia}
 
 </div>
 
 <div class="item">
 
-<b>Participação:</b>
+<b>
+Participação:
+</b>
+
+${minha.participacao}
+
+</div>
+
+`;
+
+}
+
+window.mostrarChamada =
+async function(){
+
+const snap =
+await getDocs(
+collection(
+db,
+"chamadas"
+)
+);
+
+let html =
+"<h2>Minha Chamada</h2>";
+
+snap.forEach(docx=>{
+
+const d =
+docx.data();
+
+(
+d.chamada
+||
+[]
+)
+.forEach(c=>{
+
+if(
+c.id
+===
+usuario.id
+){
+
+html += `
+
+<div class="item">
+
+<b>
+Data:
+</b>
+
+${d.data}
+
+<br>
+
+<b>
+Status:
+</b>
+
+${c.status}
 
 ${
-data["Participação"]
-?.[usuario.nome]
-||
-"-"
+c.justificativa
+?
+`<br>
+<b>
+Justificativa:
+</b>
+${c.justificativa}`
+:
+""
 }
 
 </div>
@@ -717,32 +805,107 @@ data["Participação"]
 
 }
 
-window.mostrarChat =
-function(){
+});
 
-box.innerHTML = `
+});
+
+conteudo.innerHTML =
+html;
+
+}
+
+window.abrirChat =
+async function(){
+
+const ref =
+doc(
+db,
+"chats",
+usuario.id
+);
+
+const snap =
+await getDoc(
+ref
+);
+
+let mensagens =
+[];
+
+if(
+snap.exists()
+){
+
+mensagens =
+snap.data()
+.mensagens
+||
+[];
+
+}
+
+const profJaMandou =
+
+mensagens.some(
+
+m=>
+
+m.autor
+!== usuario.nome
+
+);
+
+let html = `
 
 <h2>
-💬 Chat
+Chat com Prof
 </h2>
 
 <div
-class="chat-box"
+class="chat"
 id="chatBox">
 
-Carregando...
+`;
+
+mensagens.forEach(m=>{
+
+html += `
+
+<div class="msg">
+
+<b>
+${m.autor}
+</b>
+
+<br>
+
+${m.texto}
 
 </div>
 
+`;
+
+});
+
+html += `</div>`;
+
+if(
+profJaMandou
+){
+
+html += `
+
 <textarea
-id="mensagem"
-placeholder=
-"Mensagem">
-</textarea>
+id="msg"
+placeholder="
+Digite
+sua mensagem
+"></textarea>
 
 <button
-class="btn"
-onclick="enviarMensagem()">
+onclick="
+responderChat()
+">
 
 Enviar
 
@@ -750,140 +913,95 @@ Enviar
 
 `;
 
-const ref =
-collection(
-db,
-"chat"
-);
-
-const q =
-query(
-ref,
-where(
-"idAluno",
-"==",
-usuario.id
-)
-);
-
-onSnapshot(
-q,
-snapshot=>{
-
-let html =
-"";
-
-let profMandou =
-false;
-
-snapshot.forEach(
-docx=>{
-
-const d =
-docx.data();
-
-if(
-d.autor
-===
-"prof"
-){
-
-profMandou =
-true;
-
-html += `
-<div class="msg-prof">
-${d.texto}
-</div>
-`;
-
 }
 else{
 
 html += `
-<div class="msg-aluno">
-${d.texto}
-</div>
+
+<p class="erro">
+
+Você não pode
+mandar mensagem
+antes do professor.
+
+</p>
+
 `;
 
 }
 
-});
-
-document
-.getElementById(
-"chatBox"
-)
-.innerHTML =
-html
-||
-"Sem mensagens";
-
-window.podeResponder =
-profMandou;
-
-}
-);
+conteudo.innerHTML =
+html;
 
 }
 
-window.enviarMensagem =
+window.responderChat =
 async function(){
 
-if(
-!window.podeResponder
-){
-
-alert(
-"O professor precisa mandar mensagem primeiro."
-);
-
-return;
-
-}
-
 const texto =
+
 document
 .getElementById(
-"mensagem"
+"msg"
 )
 .value
 .trim();
 
-if(!texto)
-return;
+if(
+!texto
+)return;
 
-await addDoc(
-collection(
+const ref =
+doc(
 db,
-"chat"
-),
-{
-idAluno:
-usuario.id,
+"chats",
+usuario.id
+);
 
-nome:
+const snap =
+await getDoc(
+ref
+);
+
+let mensagens =
+[];
+
+if(
+snap.exists()
+){
+
+mensagens =
+snap.data()
+.mensagens
+||
+[];
+
+}
+
+mensagens.push({
+
+autor:
 usuario.nome,
 
 texto,
 
-autor:
-"aluno",
-
 data:
-serverTimestamp()
+Date.now()
+
+});
+
+await setDoc(
+ref,
+{
+mensagens
 }
 );
 
-document
-.getElementById(
-"mensagem"
-)
-.value = "";
+abrirChat();
 
 }
 
 </script>
+
 </body>
 </html>
-```
